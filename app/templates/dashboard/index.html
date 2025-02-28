@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if data.get("title") %}
+<h1>{{ data.title }}</h1>
+{% else %}
+<h1>Dashboard</h1>
+{% endif %}
+
+
+<style>
+    h1 {
+        width: 100%;
+        text-align: center;
+        padding-top: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+    }
+</style>
+{% endblock content %}

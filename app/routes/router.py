@@ -20,8 +20,8 @@ def include_all_routers(app, package_name="app.routes"):
         # If it's a package, recurse into it
         if is_pkg:
             include_all_routers(app, full_name)
+            print(f"Routers in {full_name} included.")
         else:
             # If there's a 'router' attribute, include it
             if hasattr(submodule, "router"):
                 app.include_router(submodule.router)
-                print(f"Registered router from {full_name}")

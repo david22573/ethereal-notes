@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100dvh;
+    background-color: #032093;
+    color: white;
+}

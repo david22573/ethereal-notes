@@ -7,20 +7,16 @@ class Notebook(SQLModel, table=True):
     description: str | None
 
     parent_id: int | None = Field(default=None, foreign_key="notebook.id")
-    parent: "Notebook" | None = Relationship(
+    parent: "Notebook" = Relationship(
         back_populates="children",
-        sa_relationship_kwargs={"remote_side": "Notebook.id"},
-        cascade_delete=True,
-        passive_deletes="all",
+        sa_relationship_kwargs={"remote_side": "Notebook.id", "single_parent": True},
     )
 
     children: list["Notebook"] = Relationship(
-        back_populates="parent", cascade_delete=True, passive_deletes="all"
+        back_populates="parent", cascade_delete=True
     )
 
-    notes: list["Note"] = Relationship(
-        back_populates="notebook", cascade_delete=True, passive_deletes="all"
-    )
+    notes: list["Note"] = Relationship(back_populates="notebook", cascade_delete=True)
 
 
 class Note(SQLModel, table=True):
@@ -28,7 +24,9 @@ class Note(SQLModel, table=True):
     title: str
     content: str
 
-    notebook_id: int | None = Field(
-        default=None, foreign_key="notebook.id", on_delete="CASCADE"
-    )
+    notebook_id: int | None = Field(default=None, foreign_key="notebook.id")
     notebook: Notebook | None = Relationship(back_populates="notes")
+
+
+def create_db_and_tables(engine):
+    SQLModel.metadata.create_all(engine)

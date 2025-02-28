@@ -4,11 +4,13 @@ from fastapi import FastAPI
 
 from app.database import engine
 from app.models import create_db_and_tables
+from app.routes.router import include_all_routers
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables(engine)
+    include_all_routers(app)
     yield
     engine.dispose()
 
